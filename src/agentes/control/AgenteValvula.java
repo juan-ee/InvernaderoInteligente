@@ -32,20 +32,20 @@ public class AgenteValvula extends Agent {
         }
 
         @Override
-        public void action() {
+       public void action() {
             ACLMessage mensaje = getAgent().blockingReceive();
 //            arduino.abrir();
             System.out.println("Valvula: " + mensaje.getContent());
             StringTokenizer tokens = new StringTokenizer(mensaje.getContent());
             String control = tokens.nextToken();
-            if (control.equals("A1\n")) {
+            if (control.equals("A1")) {
                 String tiempo = tokens.nextToken();
-                arduino.reley(control);
+                arduino.reley("A1\n");
                 doWait(Long.parseLong(tiempo));
                 arduino.reley("D1\n");
             } else {
-                if (control.equals("D1\n")) {
-                    arduino.reley(control);
+                if (control.equals("D1")) {
+                    arduino.reley("D1\n");
 
                 }
             }
