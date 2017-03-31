@@ -68,8 +68,8 @@ public class Contenedor {
             agenteController = main_agenteContainer.createNewAgent("AgTemperatura", AgenteTemperatura.class.getName(), null);
             agenteController.start();
             //bd
-//            agenteController = main_agenteContainer.createNewAgent("AgBD", AgenteBD.class.getName(), null);
-//            agenteController.start();
+            agenteController = main_agenteContainer.createNewAgent("AgenteDBA", AgenteDBA.class.getName(), null);
+            agenteController.start();
             //receptor
             agenteController = main_agenteContainer.createNewAgent("AgReceptor", AgenteReceptor.class.getName(), null);
             agenteController.start();
