@@ -43,22 +43,38 @@ public class AgenteReceptor extends Agent {
         @Override
         public void action() {
 
-            arduino.getSerial().addListener((SerialDataEventListener) (SerialDataEvent event) -> {
-                try {
-                    String valorArduino = event.getAsciiString();
-                    System.out.println(valorArduino);
-                    descomponer(valorArduino);
-                    enviar.send(getAgent(), iluminacion + "", "AgIluminacion");//enviar iluminacion
-                    enviar.send(getAgent(), humedad + "", "AgHumedad");//enviar humedad
-                    enviar.send(getAgent(), riego + "", "AgDetectorRiego");//enviar riego
-                    enviar.send(getAgent(), temperatura + "", "AgTemperatura");//enviar temperatura
-
-                } catch (IOException ex) {
-                    Logger.getLogger(AgenteIluminacion.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-
-            getAgent().doWait(30000);
+//            arduino.getSerial().addListener((SerialDataEventListener) (SerialDataEvent event) -> {
+//                try {
+//                    String valorArduino = event.getAsciiString();
+//                    System.out.println(valorArduino);
+//                    descomponer(valorArduino);
+//                    enviar.send(getAgent(), iluminacion + "", "AgIluminacion");//enviar iluminacion
+//                    enviar.send(getAgent(), humedad + "", "AgHumedad");//enviar humedad
+//                    enviar.send(getAgent(), riego + "", "AgDetectorRiego");//enviar riego
+//                    enviar.send(getAgent(), temperatura + "", "AgTemperatura");//enviar temperatura
+//
+//                } catch (IOException ex) {
+//                    Logger.getLogger(AgenteIluminacion.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            });
+//            arduino.getSerial().addListener((SerialDataEventListener) (SerialDataEvent event) -> {
+//                try {
+            String valorArduino = arduino.getValoresArduino();
+            System.out.println(valorArduino);
+            descomponer(valorArduino);
+            enviar.send(getAgent(), iluminacion + "", "AgIluminacion");//enviar iluminacion
+            enviar.send(getAgent(), humedad + "", "AgHumedad");//enviar humedad
+            enviar.send(getAgent(), riego + "", "AgDetectorRiego");//enviar riego
+            enviar.send(getAgent(), temperatura + "", "AgTemperatura");//enviar temperatura
+            try {
+                //                } catch (IOException ex) {
+//                    Logger.getLogger(AgenteIluminacion.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            });
+                Thread.sleep(30000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AgenteReceptor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         private void descomponer(String valores) {//obtiene valores del arduino

@@ -33,14 +33,15 @@ public class AgenteBroker extends Agent {
 
         @Override
         public void action() {
-            ACLMessage mensaje = getAgent().blockingReceive();            
+            ACLMessage mensaje = getAgent().blockingReceive();
             asignarParametro(mensaje, mensaje.getContent());
-            getDate();
 
-            if ((parametros[0] != null) && (parametros[1] != null)
-                    && (parametros[2] != null) && (parametros[3] != null)) {
-                envio.sendArray(parametros, getAgent(),"AgenteDBA");
-                imprimir();                
+            if (((parametros[0] != null) && (parametros[1] != null)
+                    && (parametros[2] != null) && (parametros[3] != null))
+                    && (!parametros[0].isEmpty()) && (!parametros[1].isEmpty())
+                    && (!parametros[2].isEmpty()) && (!parametros[3].isEmpty())) {
+                envio.sendArray(parametros, getAgent(), "AgenteDBA");
+                imprimir();
                 temperatura = Double.parseDouble(parametros[0]);
                 humedad = Double.parseDouble(parametros[2]);
                 iluminacion = Double.parseDouble(parametros[3]);
@@ -70,6 +71,10 @@ public class AgenteBroker extends Agent {
                 controlRiego();
                 controlCalefaccion();
                 controlIluminacion();
+                
+                for (int i = 0; i < parametros.length; i++) {
+                    parametros[i] = null;
+                }
             }
         }
 
@@ -85,6 +90,7 @@ public class AgenteBroker extends Agent {
         }
 
         private void controlIluminacion() {
+            getDate();
             if (hora >= 5 && hora <= 17) {
                 if (iluminacion < 1500) {
                     //**************prender foco, 5 minutos*************

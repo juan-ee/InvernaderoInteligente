@@ -18,7 +18,9 @@ public class Ejecucion {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        new Arduino().abrir();
+        Arduino arduino = new Arduino();
+        arduino.abrir();
+        arduino.listener();
         Contenedor contenedorInvernadero = new Contenedor();
         contenedorInvernadero.contenedor();
         contenedorInvernadero.iniciarAgentes();

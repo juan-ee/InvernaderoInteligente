@@ -1,6 +1,9 @@
 package arduino;
 
+import agentes.deteccion.AgenteIluminacion;
 import com.pi4j.io.serial.Serial;
+import com.pi4j.io.serial.SerialDataEvent;
+import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialFactory;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -12,6 +15,7 @@ public class Arduino {
     private String puerto;
     private int tasa;
     static Serial serial;
+    static String valoresArduino;
 
     public Arduino() {
 
@@ -63,6 +67,24 @@ public class Arduino {
             System.out.println("Puerto serial cerrado");
         }
         return null;
+    }
+
+    public void listener() {
+        getSerial().addListener((SerialDataEventListener) (SerialDataEvent event) -> {
+            try {
+                valoresArduino = event.getAsciiString();
+            } catch (IOException ex) {
+                Logger.getLogger(AgenteIluminacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    public static String getValoresArduino() {
+        return valoresArduino;
+    }
+
+    public static void setValoresArduino(String valoresArduino) {
+        Arduino.valoresArduino = valoresArduino;
     }
 
 }

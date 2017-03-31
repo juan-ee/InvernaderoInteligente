@@ -39,11 +39,10 @@ public class AgenteDBA extends Agent {
             }
         }
         
-        private void escribir(String[] parametros){
+        private void escribir(String[] parametros){            
             try {
                 PreparedStatement consulta = conexion.prepareStatement(String.format("CALL insertar_valores(%s, '%s', '%s', '%s', '%s');" ,"1",parametros[0],parametros[1],parametros[2],parametros[3]));                
                 consulta.executeUpdate();
-                System.out.println("sentancia ejecutada");
             } catch (SQLException ex) {
                 Logger.getLogger(AgenteDBA.class.getName()).log(Level.SEVERE, null, ex);
             }
